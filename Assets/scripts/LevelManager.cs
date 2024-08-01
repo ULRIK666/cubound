@@ -90,7 +90,7 @@ public class LevelManager : MonoBehaviour
             return true;
         }
 
-        if (newPosition.x < -70 || newPosition.x > 75 || newPosition.z < -65 || newPosition.z > 85)
+        if (newPosition.x < -70 || newPosition.x > 75 || newPosition.z < -65 || newPosition.z > 80)
         {
             return false;
         }

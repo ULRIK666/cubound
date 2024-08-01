@@ -29,15 +29,19 @@ public class PlayerMovement : MonoBehaviour
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveZ = Input.GetAxisRaw("Vertical");
 
+        // Prioritize horizontal movement over vertical
+        if (Mathf.Abs(moveX) > Mathf.Abs(moveZ))
+        {
+            moveZ = 0;
+        }
+        else
+        {
+            moveX = 0;
+        }
+
         if (moveX != 0 || moveZ != 0)
         {
             Vector3 moveDirection = new Vector3(moveX, 0, moveZ).normalized;
-
-            if (Mathf.Abs(moveX) > 0.1f)
-                moveDirection.z = 0;
-            else if (Mathf.Abs(moveZ) > 0.1f)
-                moveDirection.x = 0;
-
             Vector3 targetPosition = transform.position + moveDirection * moveDistance;
 
             if (levelManager.CanMove(targetPosition))
@@ -46,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-                GameObject box = levelManager.GetBoxAtPosition(transform.position + moveDirection * moveDistance);
+                GameObject box = levelManager.GetBoxAtPosition(targetPosition);
                 if (box != null)
                 {
                     Vector3 boxTargetPosition = box.transform.position + moveDirection * moveDistance;
